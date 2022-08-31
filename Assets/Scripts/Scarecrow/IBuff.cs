@@ -6,7 +6,5 @@ public interface IBuff
 {
 	void SetUp();
 
-	void TearDown();
-
 	void Tick();
 }
