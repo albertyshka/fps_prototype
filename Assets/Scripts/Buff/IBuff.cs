@@ -13,6 +13,17 @@ public interface IBuff
 	public int Duration { get; set; }
 
 	/// <summary>
+	/// Можно ли удалить баф.
+	/// (Закончил ли баф работу).
+	/// </summary>
+	public bool IsReadyToBeRemoved { get; }
+
+	/// <summary>
+	/// Можно ли применить два одинаковых бафа.
+	/// </summary>
+	public bool IsStackable { get; }
+
+	/// <summary>
 	/// Функция вызывается при добавлении нового бафа к npc.
 	/// Изменяет добавляемый баф, накладывая на него ограничения,
 	/// либо усиливая его.

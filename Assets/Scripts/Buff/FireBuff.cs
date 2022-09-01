@@ -5,23 +5,26 @@ public class FireBuff : IBuff
 	private readonly int _damagePerSecond;
 	private readonly int _startDamage;
 	private readonly int _dryDamage;
-
-	private IDisposable _removeDisposable;
-
+	private readonly bool _isStackable;
 	private int _duration;
-	public int Duration 
+
+	int IBuff.Duration
 	{ 
-		get => _duration;
+		get => _duration; 
 		set => _duration = value; 
 	}
+	bool IBuff.IsReadyToBeRemoved => _duration <= 0;
+	bool IBuff.IsStackable => _isStackable;
 
 	public int DryDamage => _dryDamage;
 
-	public FireBuff(int duration, int damagePerSecond, int dryDamage)
+
+	public FireBuff(int duration, bool isStackable, int damagePerSecond, int dryDamage)
 	{
 		_duration = duration;
 		_damagePerSecond = damagePerSecond;
 		_dryDamage = dryDamage;
+		_isStackable = isStackable;
 	}
 
 	public void ApplyStatChange(ref IBuff buff)
@@ -31,13 +34,13 @@ public class FireBuff : IBuff
 			case DamageBuff damageBuff:
 				damageBuff.Damage += 10;
 				break;
-			case WaterBuff waterBuff:
+			case WaterBuff:
 				// удалить огненный баф
-				_removeDisposable?.Dispose();
+				_duration = 0;
 				break;
-			case FireBuff fireBuff:
+			case FireBuff:
 				// восстановить огонь
-				_duration = fireBuff.Duration;
+				_duration = buff.Duration;
 				break;
 			default:
 				throw new NotImplementedException();

@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class DamageBuff : IBuff
 {
+	private readonly bool _isStackable;
+
+	int IBuff.Duration { get => 0; set { } }
+	bool IBuff.IsReadyToBeRemoved => true;
+	bool IBuff.IsStackable => _isStackable;
+
 	public int Damage;
 
-	public int Duration { get => 0; set { } }
-
-	public DamageBuff(int damage)
+	public DamageBuff(int damage, bool isStackable)
 	{
 		Damage = damage;
+		_isStackable = isStackable;
 	}
 
-	public void ApplyStatChange(ref IBuff buff) { }
+	void IBuff.ApplyStatChange(ref IBuff buff) { }
 
 	void IBuff.OnStartUp(INpcStatsHolder stats)
 	{

@@ -7,9 +7,9 @@ using System.Linq;
 
 public class NpcStatController : MonoBehaviour, INpcStatsHolder
 {
-	public LinkedList<IBuff> _buffs = new LinkedList<IBuff>();
-
 	[SerializeField] private int _startHP = 1000;
+
+	public LinkedList<IBuff> _buffs = new LinkedList<IBuff>();
 
 	private readonly CompositeDisposable _disposables = new CompositeDisposable();
 	private int _healthPoints;
@@ -31,13 +31,17 @@ public class NpcStatController : MonoBehaviour, INpcStatsHolder
 			{
 				for (int i = _buffs.Count - 1; i >= 0; i--)
 				{
+					// применяем эффекты всех активных бафов
 					var buff = _buffs.ElementAt(i);
 					_buffs.ElementAt(i).OnTick(this);
 
+					// уменьшаем время бафа, если он не моментальный
 					buff.Duration -= 1;
-					if (buff.Duration <= 0) RemoveBuff(buff);
+
+					// если баф может быть удален, удаляем его
+					if (buff.IsReadyToBeRemoved) RemoveBuff(buff);
 				}
-			});
+			}).AddTo(_disposables);
 	}
 
 	private void OnDestroy()
@@ -45,6 +49,10 @@ public class NpcStatController : MonoBehaviour, INpcStatsHolder
 		_disposables.Dispose();
 	}
 
+	/// <summary>
+	/// Применить баф к npc.
+	/// </summary>
+	/// <param name="newBuff">Баф, который будет применен к npc.</param>
 	public void ApplyBuff(IBuff newBuff)
 	{
 		for (int i = _buffs.Count - 1; i >= 0; i--)
@@ -53,16 +61,8 @@ public class NpcStatController : MonoBehaviour, INpcStatsHolder
 			buff.ApplyStatChange(ref newBuff);
 		}
 
-		throw new NotImplementedException();
-
-		/*switch (buff)
-		{
-			case FireBuff fireBuff:
-				fireBuff.ApplyStatChange();
-				break;
-			case WaterBuff fireBuff:
-				break;
-		}*/
+		var canAdd = _buffs.Contains(newBuff) ? newBuff.IsStackable : true;
+		if (canAdd) AddBuff(newBuff);
 	}
 
 	private void AddBuff(IBuff buff)

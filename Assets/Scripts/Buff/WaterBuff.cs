@@ -6,22 +6,26 @@ using UnityEngine;
 public class WaterBuff : IBuff
 {
 	private readonly int _maxWetnessAmount;
+	private readonly bool _isStackable;
 	private int _wetnessAmount;
 
-	public int Duration { get => 1; set { } }
-	public int Amount 
-	{ 
-		get => _wetnessAmount; 
-		set => _wetnessAmount = value; 
+	int IBuff.Duration { get => 1; set { } }
+	bool IBuff.IsReadyToBeRemoved => _wetnessAmount <= 0;
+	bool IBuff.IsStackable => _isStackable;
+
+	public int Amount
+	{
+		get => _wetnessAmount;
+		set => _wetnessAmount = value;
 	}
 
-	public WaterBuff(int amount, int maxAmount)
+	public WaterBuff(int amount, int maxAmount, bool isStackable)
 	{
 		_wetnessAmount = amount;
 		_maxWetnessAmount = maxAmount;
 	}
 
-	public void ApplyStatChange(ref IBuff buff)
+	void IBuff.ApplyStatChange(ref IBuff buff)
 	{
 		switch (buff)
 		{
@@ -41,7 +45,7 @@ public class WaterBuff : IBuff
 		_wetnessAmount = Mathf.Min(_wetnessAmount, _maxWetnessAmount);
 	}
 
-	public void OnStartUp(INpcStatsHolder stats) { }
-	public void OnTearDown(INpcStatsHolder stats) { }
-	public void OnTick(INpcStatsHolder stats) { }
+	void IBuff.OnStartUp(INpcStatsHolder stats) { }
+	void IBuff.OnTearDown(INpcStatsHolder stats) { }
+	void IBuff.OnTick(INpcStatsHolder stats) { }
 }
