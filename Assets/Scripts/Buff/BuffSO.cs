@@ -15,7 +15,18 @@ public class BuffSO : SerializedScriptableObject
     public float Duration;
 
     [LabelWidth(80), HorizontalGroup("B")]
-    public BuffStatType Stat;
+    public NpcProperty Stat;
+    [ShowIf("Stat", NpcProperty.Buff)]
+    [LabelWidth(50), HorizontalGroup("B")]
+    public string BuffId;
+    [HideIf("Stat", NpcProperty.Buff)]
     [LabelWidth(50), HorizontalGroup("B")]
     public float Amount;
 }
+
+/*
+ * эффект, continuous (сколько то секунд)
+ * влияет на входящие значения урона (мокрость или hp)
+ * 
+ * эффекты: мокрость, горение
+ */

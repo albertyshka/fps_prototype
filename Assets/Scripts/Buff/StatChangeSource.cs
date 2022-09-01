@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BuffStatType
+public enum StatChangeSource
 {
-    Health,
-    Wetness,
+    Pistol,
+    FireRock,
+    WaterRock,
 }
