@@ -6,14 +6,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewBuff", menuName = "Common/Buff")]
 public class BuffSO : SerializedScriptableObject
 {
+    [LabelWidth(80)]
+    public string Id;    
 	[LabelWidth(80), HorizontalGroup("A")]
-    public BuffApplyType applyType;
-	[ShowIf("applyType", BuffApplyType.Continuous)]
+    public BuffApplyType ApplyType;
+	[ShowIf("ApplyType", BuffApplyType.Continuous)]
     [LabelWidth(50), HorizontalGroup("A")]
-    public float duration;
+    public float Duration;
 
     [LabelWidth(80), HorizontalGroup("B")]
-    public BuffType type;
+    public BuffStatType Stat;
     [LabelWidth(50), HorizontalGroup("B")]
-    public float amount;
+    public float Amount;
 }

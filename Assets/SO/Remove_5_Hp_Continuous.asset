@@ -10,9 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe16f80218fa81842b8616940879fe89, type: 3}
-  m_Name: AddWetness
+  m_Name: Remove_5_Hp_Continuous
   m_EditorClassIdentifier: 
-  type: 1
-  appplyType: 0
-  amount: 10
-  duration: 0
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  Id: fire
+  ApplyType: 1
+  Duration: 5
+  Stat: 0
+  Amount: -5
