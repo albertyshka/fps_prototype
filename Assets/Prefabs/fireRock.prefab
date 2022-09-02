@@ -84,6 +84,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fireRock
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3c9c8eac1306b734b8a72f0eb6f54e68, type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c9c8eac1306b734b8a72f0eb6f54e68, type: 3}
 --- !u!1 &3645979382794008919 stripped
