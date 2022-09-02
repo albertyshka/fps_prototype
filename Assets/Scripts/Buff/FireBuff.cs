@@ -34,11 +34,11 @@ public class FireBuff : IBuff
 			case DamageBuff damageBuff:
 				damageBuff.Damage += 10;
 				break;
-			case WaterBuff:
+			case WaterBuff waterBuff:
 				// удалить огненный баф
 				_duration = 0;
 				break;
-			case FireBuff:
+			case FireBuff fireBuff:
 				// восстановить огонь
 				_duration = buff.Duration;
 				break;
