@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,11 +14,13 @@ namespace PlayerController
 
     public class PlayerWeaponPicker : MonoBehaviour
     {
-        [SerializeField] private GameObject _leftArm;
-        [SerializeField] private GameObject _rightArm;
+		[Header("Common")]
+        [SerializeField] private Transform _leftArm;
+        [SerializeField] private Transform _rightArm;
         [SerializeField] private Camera _camera;
         [SerializeField] private float _pickUpRange;
         [SerializeField] private string _weaponTag;
+        [SerializeField] private float _pullForce;
 
         [Header("UI")]
         [SerializeField] private Image _uiPointer;
@@ -28,8 +31,8 @@ namespace PlayerController
         [SerializeField] private KeyCode _leftHandPickUp;
         [SerializeField] private KeyCode _rightHandPickUp;
 
-        private GameObject _leftArmWeapon;
-        private GameObject _rightArmWeapon;
+        private Weapon _leftArmWeapon;
+        private Weapon _rightArmWeapon;
 
         private RaycastHit _hit;
 
@@ -39,7 +42,7 @@ namespace PlayerController
 
             if (Physics.Raycast(rayOrigin, _camera.transform.forward, out _hit, 1000f))
             {
-                if (_hit.collider.tag == _weaponTag)
+                if (_hit.collider != null && _hit.collider.tag == _weaponTag)
                 {
                     _uiPointer.color = _pickUpColor;
                 }
@@ -49,31 +52,45 @@ namespace PlayerController
                 }
             }
 
-            if (Input.GetKey(_leftHandPickUp)) ToggleWeapon(Hand.Left);
-            if (Input.GetKey(_rightHandPickUp)) ToggleWeapon(Hand.Right);
+            if (Input.GetKeyDown(_leftHandPickUp))
+            {
+                ToggleWeapon(Hand.Left);
+            }
+
+            if (Input.GetKeyDown(_rightHandPickUp))
+            {
+                ToggleWeapon(Hand.Right);
+            }
         }
 
-        private void ToggleWeapon(Hand hand)
+		private void ToggleWeapon(Hand hand)
         {
-            var weaponTransform = _hit.collider.transform.parent;
+            void toggleWeaponInArm(ref Weapon weapon, Transform arm)
+			{
+                if (weapon)
+                {
+                    // drop weapon
+                    weapon.RemoveFromArm();
+                    weapon = null;
+                }
+                else if (_hit.collider != null && _hit.collider.tag == _weaponTag)
+                {
+                    // pick up weapon
+                    weapon = _hit.collider.GetComponentInParent<Weapon>();
+                    weapon.PlaceInArm(arm);
+                }
+            }
 
             switch (hand)
 			{
                 case Hand.Left:
-                    if (_leftArmWeapon)
-					{
-                        // drop weapon
-					}
-                    else
-					{
-                        // pick up weapon
-                    }
-
+                    toggleWeaponInArm(ref _leftArmWeapon, _leftArm);
                     break;
                 case Hand.Right:
+                    toggleWeaponInArm(ref _rightArmWeapon, _rightArm);
                     break;
                 default:
-                    break;
+                    throw new NotImplementedException();
 			}
         }
     }
