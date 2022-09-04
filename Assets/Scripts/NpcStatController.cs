@@ -5,6 +5,7 @@ using UniRx;
 using System;
 using System.Linq;
 using Buff;
+using Zenject;
 
 public class NpcStatController : MonoBehaviour, INpcStatsHolder
 {
@@ -14,14 +15,23 @@ public class NpcStatController : MonoBehaviour, INpcStatsHolder
 	private readonly CompositeDisposable _disposables = new CompositeDisposable();
 	private int _healthPoints;
 
+	public event Action<int> OnHealthPointsChange;
+
 	LinkedList<IBuff> INpcStatsHolder.Buffs => _buffs;
-	int INpcStatsHolder.HealthPoints 
+	int INpcStatsHolder.HealthPoints
 	{ 
-		get => _healthPoints;
-		set => _healthPoints = value;
+		get
+		{
+			return _healthPoints;
+		}
+		set
+		{
+			OnHealthPointsChange?.Invoke(value);
+			_healthPoints = value;
+		}
 	}
 
-	private void Start()
+	public void Start()
 	{
 		_healthPoints = _startHP;
 
@@ -63,8 +73,6 @@ public class NpcStatController : MonoBehaviour, INpcStatsHolder
 
 		var canAdd = _buffs.Contains(newBuff) ? newBuff.IsStackable : true;
 		if (canAdd) AddBuff(newBuff);
-
-		Debug.LogError($"smtth happedned!");
 	}
 
 	private void AddBuff(IBuff buff)
