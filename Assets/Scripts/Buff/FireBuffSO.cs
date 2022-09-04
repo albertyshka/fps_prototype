@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireBuffSO : ScriptableObject
+namespace Buff
 {
-    public int duration;
-    public int damagePerSecond;
-    public int dryDamage;
+    [CreateAssetMenu(fileName = "NewFireBuff", menuName = "Common/FireBuff")]
+    public class FireBuffSO : BuffSO
+    {
+        public int Duration;
+        public int DamagePerSecond;
+        public int Damage;
+    }
 }

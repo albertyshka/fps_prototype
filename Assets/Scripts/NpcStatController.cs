@@ -4,13 +4,13 @@ using UnityEngine;
 using UniRx;
 using System;
 using System.Linq;
+using Buff;
 
 public class NpcStatController : MonoBehaviour, INpcStatsHolder
 {
 	[SerializeField] private int _startHP = 1000;
 
-	public LinkedList<IBuff> _buffs = new LinkedList<IBuff>();
-
+	private LinkedList<IBuff> _buffs = new LinkedList<IBuff>();
 	private readonly CompositeDisposable _disposables = new CompositeDisposable();
 	private int _healthPoints;
 
@@ -63,6 +63,8 @@ public class NpcStatController : MonoBehaviour, INpcStatsHolder
 
 		var canAdd = _buffs.Contains(newBuff) ? newBuff.IsStackable : true;
 		if (canAdd) AddBuff(newBuff);
+
+		Debug.LogError($"smtth happedned!");
 	}
 
 	private void AddBuff(IBuff buff)

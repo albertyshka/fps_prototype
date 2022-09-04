@@ -1,3 +1,4 @@
+using Buff;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,9 @@ public class Weapon : MonoBehaviour
 {
 	[SerializeField] private Collider[] _colliders;
 	[SerializeField] private Rigidbody _rb;
+	[SerializeField] private WeaponFire _weaponFire;
+
+	public void Fire() => _weaponFire.Fire();
 
 	public void PlaceInArm(Transform hand)
 	{

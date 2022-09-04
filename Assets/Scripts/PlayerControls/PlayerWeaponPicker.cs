@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace PlayerController
 {
-    public enum Hand
+    public enum Arm
 	{
         Right,
         Left
@@ -30,6 +30,8 @@ namespace PlayerController
         [Header("Controlls")]
         [SerializeField] private KeyCode _leftHandPickUp;
         [SerializeField] private KeyCode _rightHandPickUp;
+        [SerializeField] private KeyCode _leftFireKey;
+        [SerializeField] private KeyCode _rightFireKey;
 
         private Weapon _leftArmWeapon;
         private Weapon _rightArmWeapon;
@@ -44,6 +46,8 @@ namespace PlayerController
             {
                 if (_hit.collider != null && _hit.collider.tag == _weaponTag)
                 {
+                    // TODO: вынести это дело в отдельный менеджер и через него менять цвет
+                    // менеджер инжектить
                     _uiPointer.color = _pickUpColor;
                 }
                 else
@@ -52,18 +56,28 @@ namespace PlayerController
                 }
             }
 
-            if (Input.GetKeyDown(_leftHandPickUp))
-            {
-                ToggleWeapon(Hand.Left);
-            }
+            if (Input.GetKeyDown(_leftHandPickUp)) ToggleWeapon(Arm.Left);
+            if (Input.GetKeyDown(_rightHandPickUp)) ToggleWeapon(Arm.Right);
+            if (Input.GetKeyDown(_leftFireKey)) Fire(Arm.Left);
+            if (Input.GetKeyDown(_rightFireKey)) Fire(Arm.Right);
+        }
 
-            if (Input.GetKeyDown(_rightHandPickUp))
+        private void Fire(Arm arm)
+		{
+            switch (arm)
             {
-                ToggleWeapon(Hand.Right);
+                case Arm.Left:
+                    if (_leftArmWeapon) _leftArmWeapon.Fire();
+                    break;
+                case Arm.Right:
+                    if (_rightArmWeapon) _rightArmWeapon.Fire();
+                    break;
+                default:
+                    throw new NotImplementedException();
             }
         }
 
-		private void ToggleWeapon(Hand hand)
+		private void ToggleWeapon(Arm arm)
         {
             void toggleWeaponInArm(ref Weapon weapon, Transform arm)
 			{
@@ -76,17 +90,17 @@ namespace PlayerController
                 else if (_hit.collider != null && _hit.collider.tag == _weaponTag)
                 {
                     // pick up weapon
-                    weapon = _hit.collider.GetComponentInParent<Weapon>();
+                    weapon = _hit.collider.transform.root.GetComponent<Weapon>();
                     weapon.PlaceInArm(arm);
                 }
             }
 
-            switch (hand)
+            switch (arm)
 			{
-                case Hand.Left:
+                case Arm.Left:
                     toggleWeaponInArm(ref _leftArmWeapon, _leftArm);
                     break;
-                case Hand.Right:
+                case Arm.Right:
                     toggleWeaponInArm(ref _rightArmWeapon, _rightArm);
                     break;
                 default:
