@@ -57,6 +57,7 @@ MonoBehaviour:
   _buffProvider: {fileID: 105515941371290148}
   _particleSystem: {fileID: 788073101103235097}
   _enemyTag: Enemy
+  _onCollisionHandler: {fileID: 3894561666759374638}
 --- !u!114 &6943750395156444130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,6 +85,7 @@ GameObject:
   - component: {fileID: 5595057261219065352}
   - component: {fileID: 788073101103235097}
   - component: {fileID: 44723894373684432}
+  - component: {fileID: 3894561666759374638}
   m_Layer: 0
   m_Name: fireParticleSystem
   m_TagString: Untagged
@@ -3749,7 +3751,7 @@ ParticleSystem:
     m_Bounce:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -3853,7 +3855,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     minKillSpeed: 0
-    maxKillSpeed: 10000
+    maxKillSpeed: 0
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
@@ -4879,6 +4881,19 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &3894561666759374638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5405793820319804447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7728ddc3b1d974e989b1db321f2d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _particleSystem: {fileID: 788073101103235097}
 --- !u!1001 &4492471743282709510
 PrefabInstance:
   m_ObjectHideFlags: 0

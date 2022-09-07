@@ -7,51 +7,30 @@ public class ParticleWeaponFire : WeaponFire
 	[SerializeField] private BuffProvider _buffProvider;
 	[SerializeField] private ParticleSystem _particleSystem;
 	[SerializeField] private string _enemyTag;
+	[SerializeField] private ParticleWeaponOnCollision _onCollisionHandler;
+
+	private void Start()
+	{
+		_onCollisionHandler.OnParticleCollisionEvent += OnParticleCollisionEvent;
+	}
+
+	private void OnDestroy()
+	{
+		_onCollisionHandler.OnParticleCollisionEvent -= OnParticleCollisionEvent;
+	}
 
 	public override void Fire()
 	{
-        _particleSystem.Play();
+        _particleSystem.Emit(1);
     }
 
-	/*private void OnTrigger()
+    private void OnParticleCollisionEvent(ParticleCollisionEvent pEvent)
 	{
-		if (other.tag == _enemyTag)
+        if (pEvent.colliderComponent.tag == _enemyTag)
 		{
-			var statsHolder = other.transform.root.GetComponent<NpcStatController>() as INpcStatsHolder;
-			_buffProvider.ApplyBuff(statsHolder);
-		}
-
-		Destroy(this.gameObject);
-	}*/
-
-	void OnParticleTrigger()
-    {
-        Debug.LogError($"ParticleWeaponFire");
-
-        // particles
-        List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
-        List<ParticleSystem.Particle> exit = new List<ParticleSystem.Particle>();
-
-        // get
-        int numEnter = _particleSystem.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
-        int numExit = _particleSystem.GetTriggerParticles(ParticleSystemTriggerEventType.Exit, exit);
-
-        // iterate
-        for (int i = 0; i < numEnter; i++)
-        {
-            ParticleSystem.Particle p = enter[i];
-            p.startColor = new Color32(255, 0, 0, 255);
-            enter[i] = p;
+            var statsHolder = pEvent.colliderComponent.transform.root
+                .GetComponent<NpcStatController>() as INpcStatsHolder;
+            _buffProvider.ApplyBuff(statsHolder);
         }
-        for (int i = 0; i < numExit; i++)
-        {
-            ParticleSystem.Particle p = exit[i];
-            p.startColor = new Color32(0, 255, 0, 255);
-            exit[i] = p;
-        }
-
-        // set
-        _particleSystem.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
-        _particleSystem.SetTriggerParticles(ParticleSystemTriggerEventType.Exit, exit);
-    }
+	}
 }

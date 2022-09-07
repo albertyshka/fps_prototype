@@ -26,6 +26,7 @@ public class NpcStatController : MonoBehaviour, INpcStatsHolder
 		}
 		set
 		{
+			Debug.Log($"OnHealthPointsChange, diff: {_healthPoints - value}");
 			OnHealthPointsChange?.Invoke(value);
 			_healthPoints = value;
 		}
@@ -72,17 +73,27 @@ public class NpcStatController : MonoBehaviour, INpcStatsHolder
 		}
 
 		var canAdd = _buffs.Contains(newBuff) ? newBuff.IsStackable : true;
-		if (canAdd) AddBuff(newBuff);
+		if (canAdd)
+		{
+			AddBuff(newBuff);
+		}
+		else
+		{
+			newBuff.OnStartUp(this);
+			newBuff.OnTearDown(this);
+		}
 	}
 
 	private void AddBuff(IBuff buff)
 	{
+		Debug.Log($"AddBuff: {buff}");
 		buff.OnStartUp(this);
 		_buffs.AddLast(buff);
 	}
 
 	private void RemoveBuff(IBuff buff)
 	{
+		Debug.Log($"RemoveBuff: {buff}");
 		buff.OnTearDown(this);
 		_buffs.Remove(buff);
 	}
