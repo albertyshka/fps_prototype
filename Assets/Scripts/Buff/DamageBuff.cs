@@ -20,10 +20,11 @@ namespace Buff
 			_isStackable = isStackable;
 		}
 
-		void IBuff.ApplyStatChange(ref IBuff buff) { }
+		bool IBuff.ApplyStatChange(ref IBuff buff) => true;
 
 		void IBuff.OnStartUp(INpcStatsHolder stats)
 		{
+			Debug.Log($"DamageBuff deal initial damage {Damage}");
 			stats.HealthPoints -= Damage;
 		}
 

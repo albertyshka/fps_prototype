@@ -31,8 +31,8 @@ namespace Buff
 		/// либо усиливая его.
 		/// </summary>
 		/// <param name="buff">Баф, который будет добавлен к npc.</param>
-		/// <returns>Измененный баф.</returns>
-		void ApplyStatChange(ref IBuff buff);
+		/// <returns>Может ли новый баф быть добавлен к существующим.</returns>
+		bool ApplyStatChange(ref IBuff buff);
 
 		/// <summary>
 		/// Фнукция вызывается в момент удаления бафа

@@ -28,24 +28,29 @@ namespace Buff
 			_isStackable = isStackable;
 		}
 
-		void IBuff.ApplyStatChange(ref IBuff buff)
+		bool IBuff.ApplyStatChange(ref IBuff buff)
 		{
+			var result = false;
 			switch (buff)
 			{
 				case DamageBuff damageBuff:
+					Debug.Log($"WaterBuff change DamageBuff damage {damageBuff.Damage} by -10");
 					damageBuff.Damage -= 10;
+					result = true;
 					break;
 				case WaterBuff waterBuff:
+					Debug.Log($"WaterBuff change WaterBuff _wetnessAmount {_wetnessAmount} by {waterBuff.Amount}");
 					_wetnessAmount += waterBuff.Amount;
 					break;
 				case FireBuff fireBuff:
+					Debug.Log($"WaterBuff change FireBuff _wetnessAmount {_wetnessAmount} by {-1}");
 					_wetnessAmount -= 1;
 					break;
 				default:
 					throw new NotImplementedException();
 			}
-
 			_wetnessAmount = Mathf.Min(_wetnessAmount, _maxWetnessAmount);
+			return result;
 		}
 
 		void IBuff.OnStartUp(INpcStatsHolder stats) { }
