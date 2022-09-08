@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace Buff
 	/// <summary>
 	/// Интерфейс бафа, где баф - любое воздействие на характеристики npc.
 	/// </summary>
-	public interface IBuff
+	public interface IBuff : ICloneable
 	{
 		/// <summary>
 		/// Продолжительность бафа в секундах.

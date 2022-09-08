@@ -68,5 +68,10 @@ namespace Buff
 			Debug.Log($"FireBuff deal overtime damage {_damagePerSecond}");
 			stats.HealthPoints -= _damagePerSecond;
 		}
+
+		public object Clone()
+		{
+			return new FireBuff(_duration, _isStackable, _damagePerSecond, _startDamage);
+		}
 	}
 }

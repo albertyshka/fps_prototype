@@ -31,5 +31,10 @@ namespace Buff
 		void IBuff.OnTearDown(INpcStatsHolder stats) { }
 
 		void IBuff.OnTick(INpcStatsHolder stats) { }
+
+		public object Clone()
+		{
+			return new DamageBuff(Damage, _isStackable);
+		}
 	}
 }

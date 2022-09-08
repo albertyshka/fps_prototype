@@ -66,15 +66,17 @@ public class NpcStatController : MonoBehaviour, INpcStatsHolder
 	/// <param name="newBuff">Баф, который будет применен к npc.</param>
 	public void ApplyBuff(IBuff newBuff)
 	{
-		var applyResult = true;
+		newBuff = newBuff.Clone() as IBuff;
+
+		var canAddBuffAfterApplyResult = true;
 		for (int i = _buffs.Count - 1; i >= 0; i--)
 		{
 			var buff = _buffs.ElementAt(i);
-			applyResult = applyResult && buff.ApplyStatChange(ref newBuff);
+			canAddBuffAfterApplyResult = canAddBuffAfterApplyResult && buff.ApplyStatChange(ref newBuff);
 		}
 
-		var canAdd = _buffs.Contains(newBuff) ? newBuff.IsStackable : true;
-		if (canAdd && applyResult)
+		var canAdd = _buffs.Contains(newBuff) ? newBuff.IsStackable : newBuff.Duration > 0;
+		if (canAdd && canAddBuffAfterApplyResult)
 		{
 			AddBuff(newBuff);
 		}

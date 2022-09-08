@@ -56,5 +56,10 @@ namespace Buff
 		void IBuff.OnStartUp(INpcStatsHolder stats) { }
 		void IBuff.OnTearDown(INpcStatsHolder stats) { }
 		void IBuff.OnTick(INpcStatsHolder stats) { }
+
+		public object Clone()
+		{
+			return new WaterBuff(_wetnessAmount, _maxWetnessAmount, _isStackable);
+		}
 	}
 }
