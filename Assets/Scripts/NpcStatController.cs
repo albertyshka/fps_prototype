@@ -30,8 +30,10 @@ public class NpcStatController : MonoBehaviour, INpcStatsHolder
 		set
 		{
 			Debug.Log($"OnHealthPointsChange, diff: {_healthPoints - value}");
+
 			OnHealthPointsChange?.Invoke(value);
 			_healthPoints = value;
+			if (_healthPoints < 0) Destroy(this.gameObject);
 		}
 	}
 
