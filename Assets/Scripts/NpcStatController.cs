@@ -5,7 +5,6 @@ using UniRx;
 using System;
 using System.Linq;
 using Buff;
-using Zenject;
 
 public class NpcStatController : MonoBehaviour, INpcStatsHolder
 {
