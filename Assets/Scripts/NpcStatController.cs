@@ -10,12 +10,15 @@ using Zenject;
 public class NpcStatController : MonoBehaviour, INpcStatsHolder
 {
 	[SerializeField] private int _startHP = 1000;
+	[SerializeField] private NpcBuffViewer _npcBuffViewer;
 
 	private LinkedList<IBuff> _buffs = new LinkedList<IBuff>();
 	private readonly CompositeDisposable _disposables = new CompositeDisposable();
 	private int _healthPoints;
 
 	public event Action<int> OnHealthPointsChange;
+	public event Action<IBuff> OnBuffAdded;
+	public event Action<IBuff> OnBuffRemoved;
 
 	LinkedList<IBuff> INpcStatsHolder.Buffs => _buffs;
 	int INpcStatsHolder.HealthPoints
@@ -45,6 +48,7 @@ public class NpcStatController : MonoBehaviour, INpcStatsHolder
 					// применяем эффекты всех активных бафов
 					var buff = _buffs.ElementAt(i);
 					_buffs.ElementAt(i).OnTick(this);
+					_npcBuffViewer.OnBuffRemain(buff);
 
 					// уменьшаем время бафа, если он не моментальный
 					buff.Duration -= 1;
@@ -92,6 +96,8 @@ public class NpcStatController : MonoBehaviour, INpcStatsHolder
 		Debug.Log($"AddBuff: {buff}");
 		buff.OnStartUp(this);
 		_buffs.AddLast(buff);
+
+		OnBuffAdded?.Invoke(buff);
 	}
 
 	private void RemoveBuff(IBuff buff)
@@ -99,5 +105,7 @@ public class NpcStatController : MonoBehaviour, INpcStatsHolder
 		Debug.Log($"RemoveBuff: {buff}");
 		buff.OnTearDown(this);
 		_buffs.Remove(buff);
+
+		OnBuffRemoved?.Invoke(buff);
 	}
 }

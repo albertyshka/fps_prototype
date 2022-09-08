@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -789,6 +789,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4131598746083611988, guid: fe92609055d36de4cb370bfb525be4e3, type: 3}
+      propertyPath: _npcBuffViewer
+      value: 
+      objectReference: {fileID: 1814501639}
     - target: {fileID: 4804492463602396672, guid: fe92609055d36de4cb370bfb525be4e3, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -1032,12 +1036,17 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4131598746083611988, guid: fe92609055d36de4cb370bfb525be4e3, type: 3}
   m_PrefabInstance: {fileID: 774556323}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1814501638}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 583634a02a225c54d9dc05bd5d1539fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!23 &1287817420 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5993830680315019910, guid: fe92609055d36de4cb370bfb525be4e3, type: 3}
+  m_PrefabInstance: {fileID: 774556323}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1455273109
 GameObject:
   m_ObjectHideFlags: 0
@@ -1453,3 +1462,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64aeb5d57f1771a4a9bbdde481895b82, type: 3}
+--- !u!1 &1814501638 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5325274408359539898, guid: fe92609055d36de4cb370bfb525be4e3, type: 3}
+  m_PrefabInstance: {fileID: 774556323}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1814501639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814501638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30b4941ebc241324a996445b9a8c4526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _npcStatController: {fileID: 1158769180}
+  _meshRenderer: {fileID: 1287817420}
+  _wetMaterial: {fileID: 2100000, guid: 0ce3e1c0499977f48bdfae65c97e4af6, type: 2}
+  _onFireMaterial: {fileID: 2100000, guid: 49780a80eed53ce47a680966672421fa, type: 2}
+  _defaultMaterial: {fileID: 2100000, guid: ca239a17d354f2346b01bb71005120d9, type: 2}

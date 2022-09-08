@@ -21,7 +21,7 @@ public class ParticleWeaponFire : WeaponFire
 
 	public override void Fire()
 	{
-        _particleSystem.Emit(1);
+        _particleSystem.Emit(5);
     }
 
     private void OnParticleCollisionEvent(ParticleCollisionEvent pEvent)
